@@ -7,42 +7,62 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f6f9;
+      background:white#00b1ae;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
     .container {
-      background: white;
+      background: rgb(3, 124, 131);
       padding: 20px;
       border-radius: 30px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      width: 300px;
+      width: 320px;
       text-align: center;
     }
     h2 {
       margin-bottom: 15px;
       color: #333;
     }
-    #taskList input {
-      width: 80%;
+    .task {
+      display: flex;
+      align-items: center;
+      margin: 8px 0;
+      justify-content: space-between;
+    }
+    .task input {
+      flex: 1;
       padding: 8px;
-      margin: 5px 0;
       border: 1px solid #ccc;
       border-radius: 5px;
+      margin-right: 8px;
+    }
+    .task button {
+      padding: 6px 10px;
+      background: #4caf50;
+      color: rgba(255, 255, 255, 0.534);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .task button:hover {
+      background: #45a049;
+    }
+    .completed {
+      background: yellow;
     }
     #addTask {
-      margin-top: 10px;
+      margin-top: 15px;
       padding: 8px 15px;
-      background:pink#4caf50;
-      color: white;
+      background: #d400ff;
+      color: rgb(135, 19, 135);
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
     #addTask:hover {
-      background:blue#45a049;
+      background: #b3057c;
     }
   </style>
 </head>
@@ -57,8 +77,19 @@
 
   <script>
     $(document).ready(function(){
+      // Add new task with input + Complete button
       $("#addTask").click(function(){
-        $("#taskList").append('<input type="text" placeholder="Enter task..."><br>');
+        $("#taskList").append(`
+          <div class="task">
+            <input type="text" placeholder="Enter task...">
+            <button class="completeBtn">Complete</button>
+          </div>
+        `);
+      });
+
+      // Delegate event so new buttons also work
+      $(document).on("click", ".completeBtn", function(){
+        $(this).siblings("input").addClass("completed");
       });
     });
   </script>
