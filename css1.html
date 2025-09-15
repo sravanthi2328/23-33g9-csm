@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do List using jQuery</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    /* General body styling */
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    /* Container */
+    .container {
+      background: #fff;
+      padding: 20px 25px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    /* Input and button row */
+    #taskInput {
+      padding: 10px;
+      width: 65%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: 0.3s;
+    }
+    #taskInput:focus {
+      border-color: #007bff;
+      box-shadow: 0px 0px 5px rgba(0,123,255,0.5);
+    }
+
+    #addBtn {
+      padding: 10px 15px;
+      margin-left: 8px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #addBtn:hover {
+      background: #0056b3;
+    }
+
+    /* Task List */
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      margin: 8px 0;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    li:hover {
+      transform: translateY(-2px);
+      box-shadow: 0px 3px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Completed tasks */
+    .done {
+      text-decoration: line-through;
+      color: gray;
+      background: #e9ecef;
+    }
+
+    /* Buttons inside tasks */
+    button {
+      margin-left: 5px;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .completeBtn {
+      background: #28a745;
+      color: white;
+      transition: background 0.3s;
+    }
+    .completeBtn:hover {
+      background: #1e7e34;
+    }
+    .deleteBtn {
+      background: #dc3545;
+      color: white;
+      transition: background 0.3s;
+    }
+    .deleteBtn:hover {
+      background: #a71d2a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>To-Do List App (jQuery)</h2>
+    <input type="text" id="taskInput" placeholder="Enter a task">
+    <button id="addBtn">Add Task</button>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    $(document).ready(function(){
+      // Add new task
+      $("#addBtn").click(function(){
+        let taskText = $("#taskInput").val();
+        if(taskText.trim() !== ""){
+          $("#taskList").append(
+            `<li>${taskText}
+               <div>
+                 <button class="completeBtn">Complete</button>
+                 <button class="deleteBtn">Delete</button>
+               </div>
+             </li>`
+          );
+          $("#taskInput").val(""); // clear input
+        } else {
+          alert("Please enter a task!");
+        }
+      });
+
+      // Mark as complete
+      $(document).on("click", ".completeBtn", function(){
+        $(this).closest("li").toggleClass("done");
+      });
+
+      // Delete task
+      $(document).on("click", ".deleteBtn", function(){
+        $(this).closest("li").fadeOut(300, function(){ $(this).remove(); });
+      });
+    });
+  </script>
+</body>
+</html>
