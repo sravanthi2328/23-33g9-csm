@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Editable To-Do List</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    #todoApp {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      padding: 8px;
+      margin: 5px 0;
+      background: #e9ecef;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    li input {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div id="todoApp">
+    <h2>To-Do List</h2>
+    <input type="text" id="taskInput" placeholder="Add a task...">
+    <button id="addBtn">Add</button>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      // Add new task
+      $("#addBtn").click(function() {
+        let taskText = $("#taskInput").val();
+        if (taskText !== "") {
+          $("#taskList").append("<li>" + taskText + "</li>");
+          $("#taskInput").val("");
+        }
+      });
+
+      // Make tasks editable on double click
+      $("#taskList").on("dblclick", "li", function() {
+        let currentText = $(this).text();
+        let inputBox = $("<input type='text'>").val(currentText);
+
+        // Replace li text with input
+        $(this).html(inputBox);
+        inputBox.focus();
+
+        // Save on Enter key
+        inputBox.keydown(function(e) {
+          if (e.key === "Enter") {
+            let newText = $(this).val();
+            $(this).parent().text(newText);
+          }
+        });
+
+        // Save on blur (click outside)
+        inputBox.blur(function() {
+          let newText = $(this).val();
+          $(this).parent().text(newText);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
